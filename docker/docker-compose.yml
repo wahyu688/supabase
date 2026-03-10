@@ -57,11 +57,6 @@ services:
     volumes:
       - ./volumes/snippets:/app/snippets:Z
       - ./volumes/functions:/app/edge-functions:Z
-
-  networks:
-      default:
-        name: dashboard-management-system-supabasefinal-uj7bml_default
-        external: true
         
   kong:
     container_name: supabase-kong
