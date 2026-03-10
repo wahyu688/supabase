@@ -29,11 +29,13 @@ services:
         condition: service_healthy
       meta:
         condition: service_started
+    links:
+      - meta
+      - kong
     environment:
       NODE_OPTIONS: --dns-result-order=ipv4first
-      STUDIO_PG_META_URL: http://supabase-meta:8080
-      PG_META_URL: http://supabase-meta:8080
-      SUPABASE_PG_META_URL: http://supabase-meta:8080
+      STUDIO_PG_META_URL: http://meta:8080
+      PG_META_URL: http://meta:8080
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -42,7 +44,7 @@ services:
       DEFAULT_ORGANIZATION_NAME: ${STUDIO_DEFAULT_ORGANIZATION}
       DEFAULT_PROJECT_NAME: ${STUDIO_DEFAULT_PROJECT}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      SUPABASE_URL: http://supabase-kong:8000
+      SUPABASE_URL: http://kong:8000
       SUPABASE_PUBLIC_URL: ${SUPABASE_PUBLIC_URL}
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
@@ -50,7 +52,7 @@ services:
       LOGFLARE_API_KEY: ${LOGFLARE_PUBLIC_ACCESS_TOKEN}
       LOGFLARE_PUBLIC_ACCESS_TOKEN: ${LOGFLARE_PUBLIC_ACCESS_TOKEN}
       LOGFLARE_PRIVATE_ACCESS_TOKEN: ${LOGFLARE_PRIVATE_ACCESS_TOKEN}
-      LOGFLARE_URL: http://supabase-analytics:4000
+      LOGFLARE_URL: http://analytics:4000
       NEXT_PUBLIC_ENABLE_LOGS: "true"
       NEXT_ANALYTICS_BACKEND_PROVIDER: postgres
       SNIPPETS_MANAGEMENT_FOLDER: /app/snippets
@@ -58,7 +60,6 @@ services:
     volumes:
       - ./volumes/snippets:/app/snippets:Z
       - ./volumes/functions:/app/edge-functions:Z
-
   kong:
     container_name: supabase-kong
     image: kong:2.8.1
