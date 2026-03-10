@@ -19,7 +19,7 @@ services:
           "CMD",
           "node",
           "-e",
-          "fetch('http://127.0.0.1:3000/api/platform/profile').then((r) => {if (r.status !== 200) throw new Error(r.status)})"
+          "fetch('http://studio:3000/api/platform/profile').then((r) => {if (r.status !== 200) throw new Error(r.status)})"
         ]
       timeout: 10s
       interval: 5s
@@ -29,13 +29,10 @@ services:
         condition: service_healthy
       meta:
         condition: service_started
-    links:
-      - meta
-      - kong
     environment:
       NODE_OPTIONS: --dns-result-order=ipv4first
-      STUDIO_PG_META_URL: http://meta:8080
-      PG_META_URL: http://meta:8080
+      STUDIO_PG_META_URL: http://supabase-meta:8080
+      PG_META_URL: http://supabase-meta:8080
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -60,6 +57,7 @@ services:
     volumes:
       - ./volumes/snippets:/app/snippets:Z
       - ./volumes/functions:/app/edge-functions:Z
+      
   kong:
     container_name: supabase-kong
     image: kong:2.8.1
