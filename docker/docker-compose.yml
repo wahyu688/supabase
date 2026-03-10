@@ -29,9 +29,12 @@ services:
         condition: service_healthy
       meta:
         condition: service_started
+    links:             # INI ADALAH JALUR BYPASS DNS-NYA
+      - meta
+      - kong
     environment:
       NODE_OPTIONS: --dns-result-order=ipv4first
-      STUDIO_PG_META_URL: http://supabase-meta:8080
+      STUDIO_PG_META_URL: http://meta:8080
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_DB: ${POSTGRES_DB}
