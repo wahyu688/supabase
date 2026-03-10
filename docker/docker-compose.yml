@@ -12,6 +12,9 @@ services:
   studio:
     container_name: supabase-studio
     image: supabase/studio:2026.02.16-sha-26c615c
+    environment:
+      - NODE_OPTIONS=--dns-result-order=ipv4first
+      STUDIO_PG_META_URL: http://meta:8080
     restart: unless-stopped
     healthcheck:
       test:
