@@ -32,7 +32,7 @@ services:
     environment:
       NODE_OPTIONS: "--dns-result-order=ipv4first"
       
-      STUDIO_PG_META_URL: http://meta:8080
+      STUDIO_PG_META_URL: http://31.97.48.241:8000
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_DB: ${POSTGRES_DB}
