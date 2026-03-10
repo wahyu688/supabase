@@ -12,9 +12,6 @@ services:
   studio:
     container_name: supabase-studio
     image: supabase/studio:2026.02.16-sha-26c615c
-    environment:
-      - NODE_OPTIONS=--dns-result-order=ipv4first
-      STUDIO_PG_META_URL: http://meta:8080
     restart: unless-stopped
     healthcheck:
       test:
@@ -31,6 +28,7 @@ services:
       analytics:
         condition: service_healthy
     environment:
+      NODE_OPTIONS: --dns-result-order=ipv4first
       # Binds nestjs listener to both IPv4 and IPv6 network interfaces
       HOSTNAME: "::"
 
